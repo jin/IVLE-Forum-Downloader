@@ -25,7 +25,7 @@ def get(url)
 end
 
 def validate_user
-  get "/Validate?APIKey=#{APIKEY}&Token=#{TOKEN}"
+  get "Validate?APIKey=#{APIKEY}&Token=#{TOKEN}"
 end
 
 def get_username
