@@ -28,10 +28,6 @@ def validate_user
   get "Validate?APIKey=#{APIKEY}&Token=#{TOKEN}"
 end
 
-def get_username
-  get "UserName_Get?APIKey=#{APIKEY}&Token=#{TOKEN}"
-end
-
 # Set duration to 0 to get everything
 def get_forum_info
   get "Forum?APIKey=#{APIKEY}&AuthToken=#{TOKEN}&ForumID=#{GEK1518_FORUM_ID}&Duration=10&IncludeThreads=true"
@@ -39,17 +35,27 @@ end
 
 # Use this to get the HEADING_ID of the forum
 def get_forum_headings
-  get "Forum_Headings?APIKey=#{APIKEY}&AuthToken=#{TOKEN}&ForumID=#{GEK1518_FORUM_ID}&Duration=100&IncludeThreads=false"
+  get "Forum_Headings?APIKey=#{APIKEY}&AuthToken=#{TOKEN}&ForumID=#{GEK1518_FORUM_ID}&Duration=10&IncludeThreads=false"
 end
 
 def get_threads
   get "Forum_HeadingThreads?APIKey=#{APIKEY}&AuthToken=#{TOKEN}&HeadingID=#{GEK1518_HEADING_ID}&Duration=0&GetMainTopicsOnly=true"
 end
 
+def get_entire_thread(thread_id)
+  get "Forum_Threads?APIKey=#{APIKEY}&AuthToken=#{TOKEN}&ThreadID=#{thread_id}&Duration=0&GetSubThreads=true" 
+end
+
 def main
   validate_user
   File.open("data.json", "w") do |f|
-    f.write JSON.pretty_generate(JSON.parse(get_threads.body))
+    body = JSON.parse(get_threads.body)
+    f.write JSON.pretty_generate(body)
+
+    body["Results"].each do |thread|
+      puts
+      pp JSON.parse(get_entire_thread(thread["ID"]).body)
+    end
   end 
 end
 
