@@ -50,11 +50,11 @@ def main
   validate_user
   File.open("data.json", "w") do |f|
     body = JSON.parse(get_threads.body)
-    f.write JSON.pretty_generate(body)
-
-    body["Results"].each do |thread|
-      puts
-      pp JSON.parse(get_entire_thread(thread["ID"]).body)
+    threads_count = body["Results"].length
+    body["Results"].each_with_index do |thread, idx|
+      puts "Downloading thread: #{idx} / #{threads_count}"
+      data = JSON.parse(get_entire_thread(thread["ID"]).body)
+      f.write JSON.pretty_generate(data)
     end
   end 
 end
