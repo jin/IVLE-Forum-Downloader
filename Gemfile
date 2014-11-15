@@ -4,4 +4,3 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'activesupport'
 gem 'mongo'
-

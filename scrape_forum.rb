@@ -16,17 +16,15 @@ module IVLEForumDownloader
 
     APIKEY = config["apikey"]
     TOKEN = config["token"]
-    MODULE = "GEK1518"
+    MODULE = "GEK1508"
 
     # TODO: Find a method to obtain this automatically.
     FORUM_ID = "7787ab6d-5219-4f09-8975-7d855761c661"
     HEADING_ID = "eec30ee3-59a9-47d3-9dda-8c3385d24076"
 
     def start
-      database = setup_db
-      collection = database.collection("threads") 
       validate_user
-      download_threads collection 
+      download_threads database.collection("threads")
     end
 
     def download_threads(collection = nil)
@@ -44,9 +42,8 @@ module IVLEForumDownloader
       end
     end
 
-    def setup_db
-      db = MongoClient.new('localhost', 27017).db(MODULE)
-      db
+    def database
+      MongoClient.new('localhost', 27017).db(MODULE)
     end
 
     def conn
