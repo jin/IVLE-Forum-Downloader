@@ -25,6 +25,7 @@ will have to obtain the heading ID of the forum you want.
 
 ```shell
 bundle
+mongod --dbpath /your/choice/of/db/path/
 ruby scrape_forum.rb
 ```
 
