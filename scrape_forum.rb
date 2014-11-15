@@ -35,7 +35,7 @@ module IVLEForumDownloader
         threads_count = body["Results"].length
 
         body["Results"].each_with_index do |thread, idx|
-          puts "Downloading thread: #{idx} / #{threads_count}"
+          puts "Downloading thread: #{idx + 1} / #{threads_count}"
           data = JSON.parse(get_entire_thread(thread["ID"]).body)
 
           collection.insert(data)
