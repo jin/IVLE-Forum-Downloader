@@ -32,6 +32,7 @@ ruby scrape_forum.rb
 Implemented features
 - Validation of auth token
 - Pulling of all main threads from a forum into a JSON file
+- Writing to a MongoDB collection
 
 TODO
 - Optparsing of arguments
