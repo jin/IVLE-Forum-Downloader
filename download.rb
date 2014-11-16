@@ -5,6 +5,7 @@ require 'active_support'
 require 'json'
 require 'pp'
 require 'mongo'
+require 'optparse'
 
 module IVLEForumDownloader
 
@@ -22,7 +23,8 @@ module IVLEForumDownloader
     FORUM_ID = "7787ab6d-5219-4f09-8975-7d855761c661"
     HEADING_ID = "eec30ee3-59a9-47d3-9dda-8c3385d24076"
 
-    def start
+    def start(opts)
+      p opts
       validate_user
       download_threads database.collection("threads")
     end
@@ -83,4 +85,25 @@ module IVLEForumDownloader
 
 end
 
-IVLEForumDownloader.start
+#=========================================
+# Option parsing from command line
+#=========================================
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: ruby download.rb [options]"
+
+  opts.on("-o", "--output filename", "Output file") do |o|
+    options[:output] = o
+  end
+
+  opts.on("-m", "--multithread count", Integer, "Enable multithreading and specify the number of threads. Default = 1 (single-thread).") do |t|
+    options[:threads] = t
+  end
+
+  opts.on("-v", "--verbose", "Verbose mode") do |v|
+    options[:verbose] = v
+  end
+end.parse!
+
+IVLEForumDownloader.start(options)
