@@ -16,8 +16,6 @@ module IVLEForumDownloader
 
   class << self
 
-    include Mongo
-
     include Requests
 
     def start(opts)
@@ -41,7 +39,7 @@ module IVLEForumDownloader
     end
 
     def database
-      MongoClient.new('localhost', 27017).db(MODULE)
+      Mongo::MongoClient.new('localhost', 27017).db(MODULE)
     end
 
     def conn
