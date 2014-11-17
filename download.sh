@@ -1,2 +1,2 @@
 #!/bin/bash
-ruby lib/download.rb --multithread 2 --verbose --output data.json
+ruby lib/ivle_forum_downloader.rb --multithread 2 --verbose --output data.json
