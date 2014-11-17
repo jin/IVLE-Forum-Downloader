@@ -24,7 +24,6 @@ module IVLEForumDownloader
     HEADING_ID = "eec30ee3-59a9-47d3-9dda-8c3385d24076"
 
     def start(opts)
-      p opts
       validate_user
       download_threads database.collection("threads")
     end
